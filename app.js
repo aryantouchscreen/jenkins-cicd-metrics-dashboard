@@ -1,0 +1,1 @@
+const ctx = document.getElementById("metricsChart").getContext("2d"); new Chart(ctx, { type: "line", data: { labels: ["Build #1", "Build #2", "Build #3", "Build #4", "Build #5"], datasets: [{ label: "Build Duration (mins)", data: [5, 3.5, 4.2, 3.8, 4.2], borderColor: "#007bff", fill: false }] } });
