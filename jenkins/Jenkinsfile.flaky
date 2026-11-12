@@ -1,0 +1,14 @@
+// Sample job: fails roughly one run in three, at random. Used to test the flakiness metric.
+pipeline {
+    agent any
+    triggers { cron('* * * * *') }
+    stages {
+        stage('Build') { steps { echo 'Building...'; sh 'sleep 3' } }
+        stage('Flaky test') {
+            steps {
+                // exits 1 when the current time in seconds is divisible by 3
+                sh 'sleep 2; test $(( $(date +%s) % 3 )) -ne 0'
+            }
+        }
+    }
+}

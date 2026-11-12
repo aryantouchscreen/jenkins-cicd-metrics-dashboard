@@ -1,0 +1,10 @@
+// Sample job: always succeeds. Used to generate healthy build history.
+pipeline {
+    agent any
+    triggers { cron('* * * * *') }   // runs every minute to build up history fast; remove later
+    stages {
+        stage('Build') { steps { echo 'Building...'; sh 'sleep 3' } }
+        stage('Test')  { steps { echo 'Testing...';  sh 'sleep 4' } }
+        stage('Package') { steps { echo 'Packaging...'; sh 'sleep 2' } }
+    }
+}

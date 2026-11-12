@@ -1,0 +1,9 @@
+// Sample job: always fails in the Test stage. Used to test failure-rate metrics.
+pipeline {
+    agent any
+    triggers { cron('* * * * *') }
+    stages {
+        stage('Build') { steps { echo 'Building...'; sh 'sleep 3' } }
+        stage('Test')  { steps { echo 'Tests failing on purpose'; sh 'sleep 2; exit 1' } }
+    }
+}

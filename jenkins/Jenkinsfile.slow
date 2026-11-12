@@ -1,0 +1,9 @@
+// Sample job: succeeds but with a varying duration (5 to 29 seconds). Used to test duration trends and p95.
+pipeline {
+    agent any
+    triggers { cron('* * * * *') }
+    stages {
+        stage('Build') { steps { sh 'sleep $(( $(date +%s) % 25 + 5 ))' } }
+        stage('Test')  { steps { sh 'sleep 2' } }
+    }
+}

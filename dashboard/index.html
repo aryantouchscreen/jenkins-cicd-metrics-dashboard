@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jenkins Build Metrics Dashboard</title>
+<link rel="stylesheet" href="style.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+</head>
+<body>
+<header>
+  <h1>Jenkins Build Metrics</h1>
+  <div class="status">
+    <span id="refreshed">Loading…</span>
+    <span id="stale" class="badge warn" hidden>stale data</span>
+    <button id="refreshBtn" type="button">Refresh now</button>
+  </div>
+</header>
+
+<div id="banner" class="banner" hidden></div>
+
+<section class="filters" aria-label="Filters">
+  <label>Time range
+    <select id="days">
+      <option value="1">Last 24 hours</option>
+      <option value="7" selected>Last 7 days</option>
+      <option value="14">Last 14 days</option>
+      <option value="30">Last 30 days</option>
+      <option value="0">All history</option>
+    </select>
+  </label>
+  <label>Folder <select id="folder"><option value="">All folders</option></select></label>
+  <label>Last status
+    <select id="status">
+      <option value="">Any</option><option>SUCCESS</option><option>FAILURE</option><option>UNSTABLE</option><option>ABORTED</option>
+    </select>
+  </label>
+  <label>Search job <input id="q" type="search" placeholder="job name"></label>
+  <a id="exportBtn" class="button" href="#">Export CSV</a>
+</section>
+
+<section class="kpis" id="kpis"></section>
+
+<section class="charts">
+  <div class="card"><h2>Success rate by day (%)</h2><div class="chartbox"><canvas id="successChart"></canvas></div></div>
+  <div class="card"><h2>Average build duration by day (s)</h2><div class="chartbox"><canvas id="durationChart"></canvas></div></div>
+</section>
+
+<section class="grid2">
+  <div class="card"><h2>Queue <span class="muted" id="queueNote"></span></h2><div id="queue"></div></div>
+  <div class="card"><h2>Flaky job candidates</h2>
+    <p class="muted">Jobs that alternate between pass and fail. These are candidates to investigate, not confirmed flaky tests.</p>
+    <div id="flaky"></div></div>
+</section>
+
+<section class="grid3">
+  <div class="card"><h2>Most failures</h2><div id="lbFailures"></div></div>
+  <div class="card"><h2>Slowest (avg)</h2><div id="lbDuration"></div></div>
+  <div class="card"><h2>Most builds</h2><div id="lbVolume"></div></div>
+</section>
+
+<section class="card">
+  <h2>Jobs</h2>
+  <div class="tablewrap"><table id="jobsTable"></table></div>
+  <div class="pager"><button id="prev" type="button">Previous</button><span id="pageInfo"></span><button id="next" type="button">Next</button></div>
+</section>
+
+<footer class="muted">Metric definitions: docs/metrics-definitions.md</footer>
+<script src="app.js"></script>
+</body>
+</html>
